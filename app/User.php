@@ -42,4 +42,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Asignar relación (un usuario puede tener muchos pots, relacion de uno a muchos)
+    // Cuando llame a este método sacame todos los posts relacionados con este usuario
+    public function posts(){
+        return $this->hasMany('App\Post');
+    }
 }
