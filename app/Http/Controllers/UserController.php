@@ -44,14 +44,45 @@ class UserController extends Controller
         // Se decodifica el JSON que ha llegado
         $params = json_decode($json); // Devuelve objeto
         $params_array = json_decode($json, true); // Devuelve array
-        dd($params_array);
+        //dd($params_array);
 
+        // Si llegan datos hace la validación
+        if(!empty($params) && !empty($params_array)){
+
+            // Elimina espacios en blanco
+            $params_array = array_map('trim', $params_array);
+
+            // Validar datos
+            // Se pasa el array con los campos que se van a validar
+            // Se pasan las validaciones que queremos hacer
+            $validate = Validator::make($params_array, [
+                'name'     => 'required | alpha',
+                'surname'  => 'required | alpha',
+                'email'    => 'required | email | unique:users', // Necesita la tabla
+                'password' => 'required'
+            ]);
+
+
+            // Comprueba si ha habido algún fallo en la validación
+            if($validate->fails()){
+                // En caso de error en el registro devolvemos un mensaje con el error
+                $data    = array(
+                    'status'  => 'error',
+                    'code'    => 404,
+                    'message' => 'El usuario no se ha creado',
+                    'errors'  => $validate->errors()
+                );
+            }else{
+
+            }
         // Si no nos llegan datos correctamente
-        $data    = array(
-            'status'  => 'error',
-            'code'    => 404,
-            'message' => 'El usuario no se a creado'
-        );
+        }else{
+            $data    = array(
+                'status'  => 'error',
+                'code'    => 404,
+                'message' => 'Los datos enviados no son correctos'
+            );
+        }
 
         return response()->json($data, $data['code']);
     }
