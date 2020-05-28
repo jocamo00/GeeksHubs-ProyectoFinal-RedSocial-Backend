@@ -73,9 +73,32 @@ class UserController extends Controller
                     'errors'  => $validate->errors()
                 );
             }else{
+                // Cifrado de la contraseña, le pasamos el cifrado al password y el número de veces que la queremos cifrar
+                $pwd = password_hash($params->password, PASSWORD_BCRYPT, ['cost' => 4]);
+
+                // Crea el usuario
+                $user = new User();
+                $user -> name     = $params_array['name'];
+                $user -> surname  = $params_array['surname'];
+                $user -> email    = $params_array['email'];
+                $user -> password = $pwd;
+                $user -> role     = 'ROLE_USER';
+                //dd($user);
+
+
+                // Guarda el usuario
+                $user->save();
+
+                // Mensaje de registro ok
+                $data = array(
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'El usuario se ha creado correctamente',
+                    'user' => $user
+                );
 
             }
-        // Si no nos llegan datos correctamente
+        // Mensaje si no nos llegan datos correctamente
         }else{
             $data    = array(
                 'status'  => 'error',
