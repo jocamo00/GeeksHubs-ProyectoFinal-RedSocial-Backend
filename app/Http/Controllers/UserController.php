@@ -85,7 +85,6 @@ class UserController extends Controller
                 $user -> role     = 'ROLE_USER';
                 //dd($user);
 
-
                 // Guarda el usuario
                 $user->save();
 
