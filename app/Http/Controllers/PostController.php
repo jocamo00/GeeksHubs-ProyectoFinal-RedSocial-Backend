@@ -54,7 +54,23 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+
+        if(is_object($post)){
+            $data = [
+                'code'   => 200,
+                'status' => 'success',
+                'posts'  => $post
+            ];
+        }else{
+            $data = [
+                'code'    => 404,
+                'status'  => 'error',
+                'message' => 'El post no existe'
+            ];
+        }
+
+        return response()->json($data, $data['code']);
     }
 
     /**
