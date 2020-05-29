@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Post;
 
 class PostController extends Controller
 {
@@ -13,7 +15,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $post = Post::all();
+
+        // Devuelve json con mensaje y los posts
+        return response()->json([
+            'code'   => 200,
+            'status' => 'success',
+            'posts'  => $post
+        ], 200);
     }
 
     /**
