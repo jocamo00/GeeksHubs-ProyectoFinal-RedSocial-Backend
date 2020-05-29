@@ -162,6 +162,25 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Obtiene registro a eliminar
+        $post = Post::find($id);
+
+        if(!empty($post)){
+            //Borra el post
+            $post->delete();
+
+            $data = [
+                'code'   => 200,
+                'status' => 'succes',
+                'post'   => $post
+            ];
+        }else{
+            $data = [
+                'code'    => 404,
+                'status'  => 'error',
+                'message' => 'El post no existe'
+            ];
+        }
+        return response()->json($data, $data['code']);
     }
 }
