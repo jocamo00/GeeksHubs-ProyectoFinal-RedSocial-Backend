@@ -20,7 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 // Rutas del controlador de usuarios
-Route::apiResource("/user", 'UserController');
+Route::apiResource('/user', 'UserController');
+Route::post('/login', 'UserController@login');
 
 // Rutas del controlador de posts
 Route::apiResource('post', 'PostController');

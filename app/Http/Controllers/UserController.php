@@ -73,8 +73,9 @@ class UserController extends Controller
                     'errors'  => $validate->errors()
                 );
             }else{
-                // Cifrado de la contraseña, le pasamos el cifrado al password y el número de veces que la queremos cifrar
-                $pwd = password_hash($params->password, PASSWORD_BCRYPT, ['cost' => 4]);
+                // Cifrado de la contraseña, se usa el método hash()
+                // Se le pasa algoritmo de cifrado y el password
+                $pwd = hash('sha256', $params->password);
 
                 // Crea el usuario
                 $user = new User();
@@ -152,5 +153,17 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    // Login de usuarios
+    public function login(Request $request){
+
+        $jwtAuth = new \App\Helpers\JwtAuth;
+
+        $email = 'jose@jose.com';
+        $password = 'jose';
+        $pwd = hash('sha256', $password);
+
+        return response()->json($jwtAuth->signup($email, $pwd, true), 200);
     }
 }
