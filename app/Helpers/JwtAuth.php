@@ -71,4 +71,41 @@ class JwtAuth{
 
         return $data;
     }
+
+    // Comprueba si el token es correcto y devuelve los datos del usuario identificado
+    // Le pasamos el token que queremos decodificar y
+    // getIdentity que si viene true devolvera el usuario
+    public function checkToken($jwt, $getIdentity = false){
+        $auth = false;
+
+
+        try {
+            // Se quitan las comillas dobles si vinieran con el token, remplazandolas por vacio
+            $jwt = str_replace('"', '', $jwt);
+
+            // Decodificación del token
+            // Se le pasa el jwt, la key y el algoritmo de cifrado
+            $decoded = JWT::decode($jwt, $this->key, ['HS256']);
+        } catch (\UnexpectedValueException $e) {
+            $auth = false;
+        }catch(\DomainException $e){
+            $auth = false;
+        }
+
+        // Si decoded no esta vacio, es un objeto y tenemos el id del usuario en el token
+        // Devuelve la Autenticación
+        if(!empty($decoded) && is_object($decoded) && isset($decoded->sub)){
+            $auth = true;
+        }else{
+            $auth = false;
+        }
+
+        // Si llega getIdentity devuelve el token decodificado (el objeto con los datos de usuario)
+        if($getIdentity){
+            return $decoded;
+        }
+
+        return $auth;
+    }
+
 }

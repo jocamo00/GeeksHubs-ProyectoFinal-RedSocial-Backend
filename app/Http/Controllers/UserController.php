@@ -42,7 +42,7 @@ class UserController extends Controller
         //dd($json);
 
         // Se decodifica el JSON que ha llegado
-        $params = json_decode($json); // Devuelve objeto
+        $params       = json_decode($json); // Devuelve objeto
         $params_array = json_decode($json, true); // Devuelve array
         //dd($params_array);
 
@@ -196,5 +196,24 @@ class UserController extends Controller
 
         // Devuelve los datos en formato JSON
         return response()->json($signup, 200);
+    }
+
+    public function updateLoginUser(Request $request){
+        // Recogemos el token que vendra en la cabecera
+        $token = $request->header('Authorization');
+        $jwtAuth = new \App\Helpers\JwtAuth;
+
+        // se le pasa el token a la función checkToken
+        $checkToken = $jwtAuth->checkToken($token);
+
+        if($checkToken){
+            echo "<h1>Login correcto</h1>";
+        }else{
+            echo "<h1>Login incorrecto</h1>";
+
+        }
+
+        die(); // Se corta ejecución del programa
+
     }
 }
