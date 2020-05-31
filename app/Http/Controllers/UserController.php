@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 use Illuminate\Support\Facades\Storage;
@@ -257,9 +258,19 @@ class UserController extends Controller
         // recoje datos de la petición, el archivo file0
         $image = $request->file('file0');
 
-        // Comprobación de que me a llegado la imagen
-        if($image){
-            // Guardar imagen
+        // Validación de la imagen
+        $validate = Validator::make($request->all(), [
+            'file0' => 'required | image |mimes:jpg,jpeg,png,gif'
+        ]);
+
+        // Comprueba que llega la imagen y que no haigan fallos en la validación
+        if(!$image || $validate->fails()){
+            $data = array(
+                'code'    => 400,
+                'status'  => 'error',
+                'message' => 'Error al subir imagen'
+            );
+        }else{
             // Nombre de la imagen se le concatena la fecha en formato UNIX
             $image_name = time().$image->getClientOriginalName();
 
@@ -272,13 +283,28 @@ class UserController extends Controller
                 'status' => 'success',
                 'image'  => $image_name
             );
-        }else{
-            $data = array(
-                'code'    => 400,
-                'status'  => 'error',
-                'message' => 'Error al subir imagen'
-            );
+
         }
         return response()->json($data, $data['code']);
+    }
+
+    // Método para mostrar imagen
+    public function getImage($filename){
+        // Comprueba si el archivo existe
+        $isset = Storage::disk('users')->exists($filename);
+
+        if($isset){
+            // Al método get se le pasa el archivo que queremos sacar
+            $file = Storage::disk('users')->get($filename);
+            return new Response($file, 200);
+        }else{
+            $data = array(
+                'code'    => 200,
+                'status'  => 'success',
+                'message' => 'La imagen no existe.'
+            );
+            return response()->json($data, $data['code']);
+        }
+
     }
 }
