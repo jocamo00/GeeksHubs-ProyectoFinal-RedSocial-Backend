@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -252,11 +254,31 @@ class UserController extends Controller
 
     // Función para subir el avatar del usuario
     public function upload(Request $request){
-        $data = array(
-            'code'    => 400,
-            'status'  => 'error',
-            'message' => 'Error al subir imagen'
-        );
+        // recoje datos de la petición, el archivo file0
+        $image = $request->file('file0');
+
+        // Comprobación de que me a llegado la imagen
+        if($image){
+            // Guardar imagen
+            // Nombre de la imagen se le concatena la fecha en formato UNIX
+            $image_name = time().$image->getClientOriginalName();
+
+            // Con File::get consigue la imagen y con put la guarda
+            Storage::disk('users')->put($image_name, File::get($image));
+
+            // Devuelve información
+            $data = array(
+                'code'   => 200,
+                'status' => 'success',
+                'image'  => $image_name
+            );
+        }else{
+            $data = array(
+                'code'    => 400,
+                'status'  => 'error',
+                'message' => 'Error al subir imagen'
+            );
+        }
         return response()->json($data, $data['code']);
     }
 }
