@@ -73,7 +73,7 @@ class UserController extends Controller
                     'errors'  => $validate->errors()
                 );
             }else{
-                // Cifrado de la contraseña, se usa el método hash()
+                // Cifrado de la contraseña,laravel apiResources se usa el método hash()
                 // Se le pasa algoritmo de cifrado y el password
                 $pwd = hash('sha256', $params->password);
 
@@ -139,9 +139,61 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request){
+        // Comprobar si el usuario esta identificado
+        // Recogemos el token que vendra en la cabecera
+        $token = $request->header('Authorization');
+        $jwtAuth = new \App\Helpers\JwtAuth;
+
+        // Pasa el token a la función checkToken
+        $checkToken = $jwtAuth->checkToken($token);
+
+        // Recoje los datos por post
+        $json = $request->input('json', null);
+        $params_array = json_decode($json, true); // Devuelve un array
+
+        // Comprueba que existan datos
+        if($checkToken && !empty($params_array)){
+            // Actualiza el usuario
+
+            // Sacar usuario identificado mediante el parametro getIdentity a true
+            $user = $jwtAuth->checkToken($token, true);
+
+            // Validar datos
+            $validate = Validator::make($params_array, [
+                'name'     => 'required | alpha',
+                'surname'  => 'required | alpha',
+                // Usuario cuya excepción de email se puede producir
+                // Si no se cambia el email no dara error al actualizar
+                'email'    => 'required | email | unique:users,'.$user->sub, // Necesita la tabla
+            ]);
+
+            // Se quitan los campos que no se quieren actualizar
+            unset($params_array['id']);
+            unset($params_array['rol']);
+            unset($params_array['password']);
+            unset($params_array['created_at']);
+            unset($params_array['remember_token']);
+
+            // Se actualiza el usuario cuyo id sea igual al id que tengo en $user->sub
+            $user_update = User::where('id', $user->sub)->update($params_array);
+
+            // Devuelve array con los resultados
+            $data = array(
+                'code'    => 200,
+                'status'  => 'success',
+                'user'    => $user,
+                'changes' => $params_array // Muestra el usuario con los nuevos datos
+            );
+        }else{
+            $data = array(
+                'code'    => 400,
+                'status'  => 'error',
+                'message' => 'El usuario no esta identificado.'
+            );
+        }
+        return response()->json($data, $data['code']);
+
     }
 
     /**
@@ -196,24 +248,5 @@ class UserController extends Controller
 
         // Devuelve los datos en formato JSON
         return response()->json($signup, 200);
-    }
-
-    public function updateLoginUser(Request $request){
-        // Recogemos el token que vendra en la cabecera
-        $token = $request->header('Authorization');
-        $jwtAuth = new \App\Helpers\JwtAuth;
-
-        // se le pasa el token a la función checkToken
-        $checkToken = $jwtAuth->checkToken($token);
-
-        if($checkToken){
-            echo "<h1>Login correcto</h1>";
-        }else{
-            echo "<h1>Login incorrecto</h1>";
-
-        }
-
-        die(); // Se corta ejecución del programa
-
     }
 }
