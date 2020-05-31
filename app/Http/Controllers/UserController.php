@@ -249,4 +249,14 @@ class UserController extends Controller
         // Devuelve los datos en formato JSON
         return response()->json($signup, 200);
     }
+
+    // Función para subir el avatar del usuario
+    public function upload(Request $request){
+        $data = array(
+            'code'    => 400,
+            'status'  => 'error',
+            'message' => 'Error al subir imagen'
+        );
+        return response()->json($data, $data['code']);
+    }
 }
