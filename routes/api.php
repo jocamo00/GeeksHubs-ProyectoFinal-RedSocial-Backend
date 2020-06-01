@@ -30,3 +30,5 @@ Route::get('/user/detail/{id}', 'UserController@detail');
 
 // Rutas del controlador de posts
 Route::apiResource('post', 'PostController');
+Route::post('/post/upload', 'PostController@upload');
+Route::get('/post/image/{filename}', 'PostController@getImage');
