@@ -32,3 +32,4 @@ Route::get('/user/detail/{id}', 'UserController@detail');
 Route::apiResource('post', 'PostController');
 Route::post('/post/upload', 'PostController@upload');
 Route::get('/post/image/{filename}', 'PostController@getImage');
+Route::get('/post/user/{id}', 'PostController@getPostsByUser');

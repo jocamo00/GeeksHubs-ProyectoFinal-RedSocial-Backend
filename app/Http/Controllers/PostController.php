@@ -15,7 +15,12 @@ class PostController extends Controller
 
     // Autenticacion que pide el header y token del usuario en cada petición excepto en index y show
     public function __construct(){
-        $this->middleware('api.auth', ['except' => ['index','show','getImage']]);
+        $this->middleware('api.auth', ['except' => [
+            'index',
+            'show',
+            'getImage',
+            'getPostsByUser'
+        ]]);
     }
 
     /**
@@ -318,5 +323,15 @@ class PostController extends Controller
             ];
         }
         return  response()->json($data, $data['code']);
+    }
+
+    public function getPostsByUser($id){
+        // Mostrara posts cuando el user_id sea igual al id que llega por url
+        $posts = Post::where('user_id', $id)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'posts' => $posts
+        ], 200);
     }
 }
