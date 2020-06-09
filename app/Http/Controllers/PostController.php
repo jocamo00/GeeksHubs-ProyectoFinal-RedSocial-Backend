@@ -31,9 +31,7 @@ class PostController extends Controller
     public function index()
     {
         // Listar todos los posts
-        $post = Post::all();
-
-        dd($post);
+        $post = Post::orderBy('id', 'DESC')->get()->load('user'); // Para que saque tambien la propiedad de usuario
 
         // Devuelve json con mensaje y los posts
         return response()->json([
@@ -75,9 +73,9 @@ class PostController extends Controller
 
             // Validación, se le pasa array a validar y array con las validaciones deseadas
             $validate = Validator::make($params_array, [
-                'title'       => 'required',
+                'title'       => '',
                 'content'     => 'required',
-                'image'       => 'required'
+                'image'       => ''
             ]);
 
             // Comprobación de que no hayan habido errores en la validación
@@ -122,7 +120,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::find($id)->load('user'); // Para que saque tambien la propiedad de usuario
 
         if(is_object($post)){
             $data = [
@@ -170,7 +168,7 @@ class PostController extends Controller
         if(!empty($params_array)){
             // Validación, se le pasa array a validar y array con las validaciones deseadas
             $validate = Validator::make($params_array, [
-                'title'       => 'required',
+                'title'       => '',
                 'content'     => 'required'
             ]);
 

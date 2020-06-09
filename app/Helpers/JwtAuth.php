@@ -36,12 +36,14 @@ class JwtAuth{
         if($signup){
             // Array con los datos que quiero guardar del usuario
             $payload = array(
-                'sub'     => $user->id,                   // sub hace refencia al id del usuario
-                'email'   => $user->email,
-                'name'    => $user->name,
-                'surname' => $user->surname,
-                'iat'     => time(),                      // Fecha en la que se crea el token
-                'exp'     => time() + (7 * 24 * 60 *60)   // Fecha caducidad del token, en este caso una semana
+                'sub'         => $user->id,                   // sub hace refencia al id del usuario
+                'email'       => $user->email,
+                'name'        => $user->name,
+                'surname'     => $user->surname,
+                'description' => $user->description,
+                'image'       => $user->image,
+                'iat'         => time(),                      // Fecha en la que se crea el token
+                'exp'         => time() + (7 * 24 * 60 *60)   // Fecha caducidad del token, en este caso una semana
             );
 
             // se generá el token

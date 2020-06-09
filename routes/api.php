@@ -33,3 +33,6 @@ Route::apiResource('post', 'PostController');
 Route::post('/post/upload', 'PostController@upload');
 Route::get('/post/image/{filename}', 'PostController@getImage');
 Route::get('/post/user/{id}', 'PostController@getPostsByUser');
+
+// Rutas del controlador de comentario
+Route::apiResource('/comment', 'CommentController');

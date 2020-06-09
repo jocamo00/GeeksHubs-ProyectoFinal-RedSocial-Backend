@@ -18,7 +18,15 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        // Listar todos los usuarios
+        $user = User::all();
+
+        // Devuelve json con mensaje y los usuarios
+        return response()->json([
+            'code'   => 200,
+            'status' => 'success',
+            'users'  => $user
+        ], 200);
     }
 
     /**
@@ -31,13 +39,8 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function  store(Request $request)
     {
         // Recoger los datos del usuario por post
         // Si no llegara el parámetro, daria null
@@ -244,7 +247,7 @@ class UserController extends Controller
             $signup = $jwtAuth->signup($params->email, $pwd);
 
             // Si existe el parámetro getToken devuelde los datos decodificados
-            if(!empty($params->getToken)){
+            if(!empty($params->gettoken)){
                 $signup = $jwtAuth->signup($params->email, $pwd, true);
             }
         }
@@ -313,9 +316,9 @@ class UserController extends Controller
 
         if(is_object($user)){
             $data = array(
-                'code'    => 200,
-                'status'  => 'success',
-                'user' => $user
+                'code'   => 200,
+                'status' => 'success',
+                'user'   => $user
             );
         }else{
             $data = array(
