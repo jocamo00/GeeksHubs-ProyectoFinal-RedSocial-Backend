@@ -1,79 +1,210 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# GeeksHubs-Proyecto1-Netflix-Backend
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+_El proyecto es un Backend, que estructura una red social con una temática basada en viajes, se podrán realizar las siguientes funciones:
+ * Los usuarios se podrán registrar y logear.
+ * El usuario podra editar su perfil y subir su foto.
+ * Se mostrará el perfil de cada usuario con sus publicaciones.
+ * Se podrán realizar publicaciones.
+ * El usuario que ha creado la publicación exclusivamente podrá editarla y eliminarla
+ * Las publicaciones mostrarán una imagen, un texto, la foto y nombre de su autor y fecha de publicación.
+ * Las publicaiones se mostrarán de forma que primero se muestre la más nueva.
+ * Finalmente se podrá cerrar sesión._
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Cuando el usuario se registra la contraseña es encriptada usando bcrypt, y se le envia un token al usuario. Cuando el usuario haga algún tipo de interacción con el servidor se verificara el token del mismo.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Comenzando 🚀
 
-## Learning Laravel
+_Para obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas, necesitaras descargarlo o clonar el repositorio a tu máquina._
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Tecnologías🛠️
 
-## Laravel Sponsors
+Programas u Frameworks utilizados para el desarrollo y pruebas del proyecto:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* [VSCode] - Editor de código usado - (https://code.visualstudio.com/).
+* [Laravel] - Framework de PHP.
+* [Postman] - Herramienta para el envio de peticiones HTTP REST. (Para realizar pruebas)
+* [GitHub] - Control de versiones.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
 
-## Contributing
+### Instalación 🔧
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Requiere [Composer](https://getcomposer.org/).
 
-## Code of Conduct
+Una vez descargado, descomprimido y ubicado en el directorio del proyecto, instale las dependencias y devDependencies.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```sh
+$ composer update
+```
 
-## Security Vulnerabilities
+Inicie el servidor
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```sh
+$ php artisan serve
+```
 
-## License
+Las instrucciones sobre cómo usarlas en su propia aplicación están vinculadas a continuación.
+GitHub  [plugins/github/README.md][PlGh] 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+#### Código
+
+Método para guardar un usuario en la base de datos
+```sh
+public function  store(Request $request)
+    {
+        // Recoger los datos del usuario por post
+        // Si no llegara el parámetro, daria null
+        $json = $request->input('json', null);
+        //dd($json);
+
+        // Se decodifica el JSON que ha llegado
+        $params       = json_decode($json); // Devuelve objeto
+        $params_array = json_decode($json, true); // Devuelve array
+        //dd($params_array);
+
+        // Si llegan datos hace la validación
+        if(!empty($params) && !empty($params_array)){
+
+            // Elimina espacios en blanco
+            $params_array = array_map('trim', $params_array);
+
+            // Validar datos
+            // Se pasa el array con los campos que se van a validar
+            // Se pasan las validaciones que queremos hacer
+            $validate = Validator::make($params_array, [
+                'name'     => 'required | alpha',
+                'surname'  => 'required | alpha',
+                'email'    => 'required | email | unique:users', // Necesita la tabla
+                'password' => 'required'
+            ]);
+
+
+            // Comprueba si ha habido algún fallo en la validación
+            if($validate->fails()){
+                // En caso de error en el registro devolvemos un mensaje con el error
+                $data    = array(
+                    'status'  => 'error',
+                    'code'    => 404,
+                    'message' => 'El usuario no se ha creado',
+                    'errors'  => $validate->errors()
+                );
+            }else{
+                // Cifrado de la contraseña,laravel apiResources se usa el método hash()
+                // Se le pasa algoritmo de cifrado y el password
+                $pwd = hash('sha256', $params->password);
+
+                // Crea el usuario
+                $user = new User();
+                $user -> name     = $params_array['name'];
+                $user -> surname  = $params_array['surname'];
+                $user -> email    = $params_array['email'];
+                $user -> password = $pwd;
+                $user -> role     = 'ROLE_USER';
+                //dd($user);
+
+                // Guarda el usuario
+                $user->save();
+
+                // Mensaje de registro ok
+                $data = array(
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'El usuario se ha creado correctamente',
+                    'user' => $user
+                );
+
+            }
+        // Mensaje si no nos llegan datos correctamente
+        }else{
+            $data    = array(
+                'status'  => 'error',
+                'code'    => 404,
+                'message' => 'Los datos enviados no son correctos'
+            );
+        }
+
+        return response()->json($data, $data['code']);
+    }
+```
+
+
+Método para mostrar un post
+```sh
+/**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $post = Post::find($id)->load('user'); // Para que saque tambien la propiedad de usuario
+
+        if(is_object($post)){
+            $data = [
+                'code'   => 200,
+                'status' => 'success',
+                'posts'  => $post
+            ];
+        }else{
+            $data = [
+                'code'    => 404,
+                'status'  => 'error',
+                'message' => 'El post no existe'
+            ];
+        }
+        return response()->json($data, $data['code']);
+    }
+```
+
+
+Rutas
+```sh
+// Rutas del controlador de usuarios
+Route::apiResource('/user', 'UserController');
+Route::put('/user/update', 'UserController@update');
+Route::post('/login', 'UserController@login');
+Route::post('/user/upload', 'UserController@upload')->middleware(ApiAuthMiddleware::class);
+Route::get('/user/avatar/{filename}', 'UserController@getImage');
+Route::get('/user/detail/{id}', 'UserController@detail');
+
+// Rutas del controlador de posts
+Route::apiResource('post', 'PostController');
+Route::post('/post/upload', 'PostController@upload');
+Route::get('/post/image/{filename}', 'PostController@getImage');
+Route::get('/post/user/{id}', 'PostController@getPostsByUser');
+
+// Rutas del controlador de comentario
+Route::apiResource('/comment', 'CommentController');
+```
+
+
+## Wiki 📖
+
+Puedes encontrar mucho más de cómo utilizar este proyecto en nuestra [Wiki](https://github.com/jocamo00/GeeksHubs-ProyectoFinal-RedSocial-Backend.git)
+
+La parte de frontend de este proyecto la puedes encontrar aquí. [Wiki](https://github.com/jocamo00/GeeksHubs-ProyectoFinal-RedSocial-Frontend.git)
+
+## Versionado 📌
+
+Usamos [GitHub](https://github.com/) para el versionado. Para todas las versiones disponibles, mira los [tags en este repositorio](https://github.com/jocamo00/GeeksHubs-ProyectoFinal-RedSocial-Backend.git).
+
+## Autor ✒️
+
+* **Jose Carreres** - *Todo el trabajo* - [jocamo00](https://github.com/jocamo00)
+
+## Licencia 📄
+
+Este proyecto está bajo la Licencia http://www.apache.org/licenses/LICENSE-2.0
+
+
+
+
+
+
+
+
+
